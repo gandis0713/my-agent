@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "my-agent",
+  "description": "",
+  "owner": {
+    "name": "changhyun-jeon",
+    "email": "gandis0713@gmail.com"
+  },
+  "version": "0.0.1",
+  "plugins": [
+    {
+      "name": "changhyun",
+      "description": "Changhyun's personal agent",
+      "version": "0.0.1",
+      "author": {
+        "name": "changhyun-jeon",
+        "email": "gandis0713@gmail.com"
+      },
+      "source": "./plugins/changhyun",
+      "homepage": "https://github.com/changhyun-jeon/my-agent"
+    }
+  ]
+}
