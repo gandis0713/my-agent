@@ -1,23 +1,13 @@
 ---
 name: economic-news
-description: Fetch, summarize, and analyze the latest Korean economic news articles from major financial news sites using WebFetch.
+description: Fetch, summarize, and analyze the latest Korean economic news articles from major financial news sites.
 ---
 
 # Economic News Search & Analysis
 
 Search and analyze the latest Korean economic news articles using WebFetch.
 
-## Trigger
-
-Use this skill when the user asks for:
-- Latest economic news (e.g., "오늘 경제 뉴스", "최신 경제 기사")
-- News on a specific economic topic (e.g., "반도체 관련 뉴스", "환율 동향")
-- News from a specific source (e.g., "한경 오늘 뉴스", "서울경제 기사")
-- Economic trend analysis or briefings
-
-## Supported Sites
-
-The following sites are confirmed to work with WebFetch:
+## News Sites
 
 | Site | Base URL | Category URL | Notes |
 |------|----------|--------------|-------|
@@ -26,12 +16,6 @@ The following sites are confirmed to work with WebFetch:
 | 이데일리 | edaily.co.kr | https://www.edaily.co.kr/economy/ | Relative URLs — prepend `https://www.edaily.co.kr` |
 | 헤럴드경제 | biz.heraldcorp.com | https://biz.heraldcorp.com/economy | Full URLs in article links |
 | 뉴시스 | newsis.com | https://www.newsis.com/economy/ | Relative URLs — prepend `https://www.newsis.com` |
-**Blocked or unavailable sites (do not use):**
-- mk.co.kr — blocked
-- yna.co.kr — blocked
-- biz.chosun.com — blocked
-- fnnews.com — 404
-- news1.kr — body content gets compressed/summarized by WebFetch; excluded for quality
 
 ## Steps
 

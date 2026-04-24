@@ -1,23 +1,13 @@
 ---
 name: economic-news
-description: WebFetch를 사용해 주요 경제 뉴스 사이트에서 최신 한국 경제 뉴스 기사를 가져오고 요약·분석합니다.
+description: 주요 경제 뉴스 사이트에서 최신 한국 경제 뉴스 기사를 가져오고 요약·분석합니다.
 ---
 
 # 경제 뉴스 검색 및 분석
 
 WebFetch를 활용해 주요 경제 언론사의 최신 뉴스를 검색하고 분석합니다.
 
-## 트리거
-
-다음과 같은 요청 시 이 스킬을 사용합니다:
-- 최신 경제 뉴스 요청 (예: "오늘 경제 뉴스", "최신 경제 기사")
-- 특정 경제 주제 뉴스 (예: "반도체 관련 뉴스", "환율 동향")
-- 특정 언론사 뉴스 (예: "한경 오늘 뉴스", "서울경제 기사")
-- 경제 동향 분석 또는 브리핑
-
-## 지원 사이트
-
-WebFetch로 정상 동작이 확인된 사이트 목록:
+## 뉴스 사이트
 
 | 사이트 | 베이스 URL | 카테고리 URL | 비고 |
 |--------|-----------|------------|------|
@@ -26,12 +16,6 @@ WebFetch로 정상 동작이 확인된 사이트 목록:
 | 이데일리 | edaily.co.kr | https://www.edaily.co.kr/economy/ | 상대 URL — `https://www.edaily.co.kr` 앞에 붙일 것 |
 | 헤럴드경제 | biz.heraldcorp.com | https://biz.heraldcorp.com/economy | 기사 링크 전체 URL 포함 |
 | 뉴시스 | newsis.com | https://www.newsis.com/economy/ | 상대 URL — `https://www.newsis.com` 앞에 붙일 것 |
-**차단되거나 접근 불가한 사이트 (사용 금지):**
-- mk.co.kr — 차단됨
-- yna.co.kr — 차단됨
-- biz.chosun.com — 차단됨
-- fnnews.com — 404 오류
-- news1.kr — WebFetch에서 본문이 압축·요약되어 품질 부족으로 제외
 
 ## 실행 단계
 
