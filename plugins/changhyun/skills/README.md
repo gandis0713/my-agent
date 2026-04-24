@@ -37,3 +37,23 @@ Invoke this skill when a user asks for:
 - News on a specific topic (e.g., semiconductors, exchange rate, real estate)
 - News from a specific source
 - Economic trend briefings
+
+---
+
+## git-commit
+
+Analyze staged git changes and generate a commit message using Claude Haiku, then commit.
+
+### Behavior
+
+- Reads staged diff via `git diff --cached`
+- Generates a concise commit message using Claude Haiku (`claude-haiku-4-5-20251001`)
+- Confirms the message with the user before committing
+- Handles single-line and multi-line commit messages
+
+### Usage
+
+Invoke this skill when a user asks to:
+- Commit staged changes
+- Auto-generate a commit message from staged files
+- Create a git commit
