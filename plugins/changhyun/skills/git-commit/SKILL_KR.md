@@ -1,6 +1,7 @@
 ---
 name: git-commit
 description: 스테이징된 git 변경 사항을 분석하고 Claude Haiku로 커밋 메시지를 생성한 후 커밋합니다.
+model: haiku
 ---
 
 # Git Commit

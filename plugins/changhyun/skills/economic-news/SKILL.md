@@ -1,6 +1,7 @@
 ---
 name: economic-news
 description: Fetch, summarize, and analyze the latest Korean economic news articles from major financial news sites.
+model: haiku
 ---
 
 # Economic News Search & Analysis

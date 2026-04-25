@@ -1,6 +1,7 @@
 ---
 name: git-commit
 description: Analyze staged git changes and generate a commit message using Claude Haiku, then commit.
+model: haiku
 ---
 
 # Git Commit

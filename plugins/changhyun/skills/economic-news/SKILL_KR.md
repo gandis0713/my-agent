@@ -1,6 +1,7 @@
 ---
 name: economic-news
 description: 주요 경제 뉴스 사이트에서 최신 한국 경제 뉴스 기사를 가져오고 요약·분석합니다.
+model: haiku
 ---
 
 # 경제 뉴스 검색 및 분석
