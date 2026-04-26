@@ -1,14 +1,16 @@
 ---
 name: economic-news
-description: Fetch, summarize, and analyze the latest Korean economic news articles from major financial news sites.
+description: Fetch, summarize, and analyze the latest economic news articles from major domestic and global financial news sites.
 model: haiku
 ---
 
 # Economic News Search & Analysis
 
-Search and analyze the latest Korean economic news articles using WebFetch.
+Search and analyze the latest economic news articles using WebFetch.
 
 ## News Sites
+
+### Domestic (Korea)
 
 | Site | Base URL | Category URL | Notes |
 |------|----------|--------------|-------|
@@ -18,35 +20,34 @@ Search and analyze the latest Korean economic news articles using WebFetch.
 | 헤럴드경제 | biz.heraldcorp.com | https://biz.heraldcorp.com/economy | Full URLs in article links |
 | 뉴시스 | newsis.com | https://www.newsis.com/economy/ | Relative URLs — prepend `https://www.newsis.com` |
 
+### Global
+
+| Site | Base URL | Category URL | Notes |
+|------|----------|--------------|-------|
+| Yahoo Finance | finance.yahoo.com | https://finance.yahoo.com/topic/economic-news/ | Full URLs in article links |
+| Investing.com | investing.com | https://www.investing.com/news/economy | Full URLs in article links |
+| Fortune | fortune.com | https://fortune.com/section/economy/ | Full URLs in article links |
+| Project Syndicate | project-syndicate.org | https://www.project-syndicate.org/ | Relative URLs — prepend `https://www.project-syndicate.org` |
+| SCMP | scmp.com | https://www.scmp.com/economy | Relative URLs — prepend `https://www.scmp.com` |
+
 ## Steps
 
-### 1. Determine Search Scope
+### 1. Fetch Article List
 
-- If the user specifies a topic, use it as a keyword filter when reviewing headlines.
-- If the user specifies a site, fetch only that site.
-- If no preference, fetch from 2–3 sites by default (recommended: hankyung.com + sedaily.com + biz.heraldcorp.com).
+Use WebFetch in parallel on the category URLs of domestic or global sites based on the user's request.
+- If the user specifies a topic, search for articles related to that topic.
+- If no topic is specified, fetch the latest news articles for today's date.
+- If domestic/global is not specified, use domestic sites by default.
 
-### 2. Fetch Article List
+### 2. Filter Articles
 
-Use WebFetch on the category URL(s) with this prompt:
+Remove duplicate articles from the collected headlines.
 
-> "최신 경제 뉴스 기사 제목 10개와 각 기사의 URL을 추출해주세요."
+### 3. Fetch Article Content
 
-Fetch multiple sites in parallel when possible.
+Fetch the date, author, and body of each selected article in parallel.
 
-### 3. Filter by Topic (if specified)
-
-From the returned headlines, select the 3–5 most relevant articles matching the user's keyword or topic.
-
-### 4. Fetch Article Content
-
-For each selected article, use WebFetch with:
-
-> "기사 제목, 날짜, 작성자, 본문 전체 내용을 추출해주세요."
-
-Fetch articles in parallel.
-
-### 5. Present Results
+### 4. Present Results
 
 Format the output as follows:
 
@@ -55,14 +56,14 @@ Format the output as follows:
 
 ### 1. [기사 제목]
 - 출처: [사이트명] | 날짜: [날짜] | 기자: [기자명]
-- 요약: [2–3문장 핵심 요약]
+- 요약: [핵심 내용 2–3문장]
 - 링크: [URL]
 
 ### 2. [기사 제목]
 ...
 
 ---
-💡 핵심 동향: [전체 기사를 바탕으로 한 1–2문장 경제 동향 요약]
+💡 핵심 동향: [전체 기사 기반 경제 동향 1–2문장 요약]
 ```
 
 ## Notes

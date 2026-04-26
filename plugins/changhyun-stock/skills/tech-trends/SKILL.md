@@ -1,14 +1,26 @@
 ---
-name: global-tech-trends
-description: Fetch, analyze, and extract insights from the latest global emerging technology news articles.
+name: tech-trends
+description: Fetch, analyze, and extract insights from the latest technology trend articles from major domestic and global tech news sites.
 model: haiku
 ---
 
-# Global Emerging Tech Trends
+# Tech Trends Search & Analysis
 
-Search and analyze the latest global emerging technology news using WebFetch, then deliver trend analysis and actionable insights.
+Search and analyze the latest technology news from domestic and global sources using WebFetch, then deliver trend analysis and actionable insights.
 
 ## News Sites
+
+### Domestic (Korea)
+
+| Site | Base URL | Category URL | Notes |
+|------|----------|--------------|-------|
+| 전자신문 | etnews.com | https://www.etnews.com/news/section.html?id1=01 | Full URLs in article links |
+| 블로터 | bloter.net | https://www.bloter.net/news/list.html?sec=technology | Full URLs in article links |
+| IT조선 | it.chosun.com | https://it.chosun.com/category/industry/ | Full URLs in article links |
+| ZDNet Korea | zdnet.co.kr | https://zdnet.co.kr/news/?lstcode=0000 | Relative URLs — prepend `https://zdnet.co.kr` |
+| 아이뉴스24 | inews24.com | https://inews24.com/category/it-science | Full URLs in article links |
+
+### Global
 
 | Site | Base URL | Category URL | Notes |
 |------|----------|--------------|-------|
@@ -20,44 +32,35 @@ Search and analyze the latest global emerging technology news using WebFetch, th
 
 ## Steps
 
-### 1. Determine Search Scope
+### 1. Fetch Article List
 
-- If the user specifies a date, fetch all articles published on that date.
-- If no date is specified, fetch all articles published today.
-- If the user specifies a topic (e.g., AI, biotech, climate tech), use it as a keyword filter when reviewing headlines.
-- If the user specifies a site, fetch only that site.
-- If no site preference, fetch from 2–3 sites by default (recommended: technologyreview.com + venturebeat.com + futurism.com).
+Use WebFetch in parallel on the category URLs of domestic or global sites based on the user's request.
+- If the user specifies a topic, search for articles related to that topic.
+- If a date is specified, fetch articles from that date; otherwise fetch today's articles.
+- If domestic/global is not specified, use domestic sites by default.
 
-### 2. Fetch Article List
-
-Use WebFetch on the category URL(s) with this prompt:
-
-> "Extract all article titles and their URLs published on [date]."
-
-Fetch multiple sites in parallel when possible.
-
-### 3. Filter by Date
+### 2. Filter by Date
 
 From the returned headlines, select only articles published on the target date. Do not exclude articles based on count — include all matching articles.
 
-### 4. Filter by Topic (if specified)
+### 3. Filter by Topic (if specified)
 
 If the user specified a topic, further narrow the list to articles matching the keyword.
 
+### 4. Remove Duplicates
+
+Remove duplicate articles collected across multiple sites.
+
 ### 5. Fetch Article Content
 
-For each selected article, use WebFetch with:
-
-> "Extract the article title, date, author, and full body content."
-
-Fetch articles in parallel.
+Fetch the date, author, and body of each selected article in parallel.
 
 ### 6. Present Results
 
 Format the output as follows:
 
 ```
-## 🔭 Global Tech Trends (YYYY-MM-DD)
+## 📡 Tech Trends (YYYY-MM-DD)
 
 ### 1. [Article Title]
 - Source: [Site Name] | Date: [Date] | Author: [Author]

@@ -1,6 +1,6 @@
 {
     "name": "changhyun-stock",
-    "version": "0.0.9",
+    "version": "0.0.10",
     "skills": "./skills",
     "mcpServers": "./.mcp.json"
 }

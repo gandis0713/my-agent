@@ -1,14 +1,16 @@
 ---
 name: economic-news
-description: 주요 경제 뉴스 사이트에서 최신 한국 경제 뉴스 기사를 가져오고 요약·분석합니다.
+description: 국내외 주요 경제 뉴스 사이트에서 최신 경제 뉴스 기사를 가져오고 요약·분석합니다.
 model: haiku
 ---
 
 # 경제 뉴스 검색 및 분석
 
-WebFetch를 활용해 주요 경제 언론사의 최신 뉴스를 검색하고 분석합니다.
+WebFetch를 활용해 국내외 주요 경제 언론사의 최신 뉴스를 검색하고 분석합니다.
 
 ## 뉴스 사이트
+
+### 국내
 
 | 사이트 | 베이스 URL | 카테고리 URL | 비고 |
 |--------|-----------|------------|------|
@@ -18,35 +20,34 @@ WebFetch를 활용해 주요 경제 언론사의 최신 뉴스를 검색하고 �
 | 헤럴드경제 | biz.heraldcorp.com | https://biz.heraldcorp.com/economy | 기사 링크 전체 URL 포함 |
 | 뉴시스 | newsis.com | https://www.newsis.com/economy/ | 상대 URL — `https://www.newsis.com` 앞에 붙일 것 |
 
+### 글로벌
+
+| 사이트 | 베이스 URL | 카테고리 URL | 비고 |
+|--------|-----------|------------|------|
+| Yahoo Finance | finance.yahoo.com | https://finance.yahoo.com/topic/economic-news/ | 기사 링크 전체 URL 포함 |
+| Investing.com | investing.com | https://www.investing.com/news/economy | 기사 링크 전체 URL 포함 |
+| Fortune | fortune.com | https://fortune.com/section/economy/ | 기사 링크 전체 URL 포함 |
+| Project Syndicate | project-syndicate.org | https://www.project-syndicate.org/ | 상대 URL — `https://www.project-syndicate.org` 앞에 붙일 것 |
+| SCMP | scmp.com | https://www.scmp.com/economy | 상대 URL — `https://www.scmp.com` 앞에 붙일 것 |
+
 ## 실행 단계
 
-### 1. 검색 범위 결정
+### 1. 기사 목록 수집
 
-- 사용자가 주제를 지정한 경우, 해당 키워드로 헤드라인을 필터링합니다.
-- 사용자가 특정 사이트를 지정한 경우, 해당 사이트만 조회합니다.
-- 별도 지정이 없으면 기본적으로 2–3개 사이트에서 조회합니다 (권장: hankyung.com + sedaily.com + biz.heraldcorp.com).
+사용자 요청에 따라 국내 또는 글로벌 사이트의 카테고리 URL에 WebFetch를 병렬로 적용하여 기사 제목과 URL을 수집합니다.
+- 사용자가 주제를 지정한 경우, 해당 주제 관련 기사를 검색합니다.
+- 주제가 없는 경우, 해당 날짜의 최신 뉴스 기사를 가져옵니다.
+- 국내/글로벌 구분이 없으면 국내 사이트를 기본값으로 사용합니다.
 
-### 2. 기사 목록 수집
+### 2. 기사 필터링
 
-카테고리 URL에 WebFetch를 적용하고 다음 프롬프트를 사용합니다:
+수집된 헤드라인 중 중복 기사를 제거합니다.
 
-> "최신 경제 뉴스 기사 제목 10개와 각 기사의 URL을 추출해주세요."
+### 3. 기사 본문 수집
 
-가능하면 여러 사이트를 병렬로 fetch합니다.
+선택한 각 기사의 날짜, 작성자, 본문을 병렬로 fetch합니다.
 
-### 3. 주제별 필터링 (주제 지정 시)
-
-수집된 헤드라인 중 사용자의 키워드나 주제에 가장 관련성 높은 기사 3–5개를 선택합니다.
-
-### 4. 기사 본문 수집
-
-선택한 각 기사에 대해 WebFetch를 적용합니다:
-
-> "기사 제목, 날짜, 작성자, 본문 전체 내용을 추출해주세요."
-
-기사는 병렬로 fetch합니다.
-
-### 5. 결과 출력
+### 4. 결과 출력
 
 아래 형식으로 결과를 제공합니다:
 
