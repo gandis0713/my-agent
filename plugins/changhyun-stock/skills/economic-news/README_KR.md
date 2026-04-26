@@ -1,6 +1,6 @@
 # 스킬
 
-이 디렉토리에는 `changhyun` 플러그인의 Claude Code 스킬이 포함되어 있습니다.
+이 디렉토리에는 `changhyun-stock` 플러그인의 Claude Code 스킬이 포함되어 있습니다.
 
 ---
 

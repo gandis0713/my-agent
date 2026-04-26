@@ -1,6 +1,6 @@
 # Skills
 
-This directory contains Claude Code skills for the `changhyun` plugin.
+This directory contains Claude Code skills for the `changhyun-stock` plugin.
 
 ---
 

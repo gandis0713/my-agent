@@ -6,17 +6,17 @@
     "name": "changhyun-jeon",
     "email": "gandis0713@gmail.com"
   },
-  "version": "0.0.7",
+  "version": "0.0.8",
   "plugins": [
     {
-      "name": "changhyun",
-      "description": "Changhyun's personal agent",
-      "version": "0.0.7",
+      "name": "changhyun-stock",
+      "description": "Changhyun's stock plugin",
+      "version": "0.0.8",
       "author": {
         "name": "changhyun-jeon",
         "email": "gandis0713@gmail.com"
       },
-      "source": "./plugins/changhyun/",
+      "source": "./plugins/changhyun-stock/",
       "homepage": "https://github.com/gandis0713/my-agent"
     }
   ]
