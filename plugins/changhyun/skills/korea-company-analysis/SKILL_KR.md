@@ -1,12 +1,14 @@
 ---
-name: company-analysis
-description: 네이버 금융으로 주가 및 재무 데이터, DART로 최근 공시, economic-news 스킬로 최신 뉴스를 수집해 한국 상장 기업을 종합 분석합니다.
+name: korea-company-analysis
+description: 네이버 금융으로 주가 및 재무 데이터, DART로 최근 공시, economic-news 스킬로 최신 뉴스를 수집해 한국 상장 기업(KOSPI/KOSDAQ)을 종합 분석합니다. 외국 기업은 us-company-analysis 스킬을 사용하세요.
 model: sonnet
 ---
 
-# 기업 분석
+# 기업 분석 (한국 상장 기업 전용)
 
-네이버 금융, DART 전자공시, economic-news 스킬을 활용해 한국 상장 기업을 종합 분석합니다.
+네이버 금융, DART 전자공시, economic-news 스킬을 활용해 한국 상장 기업(KOSPI/KOSDAQ)을 종합 분석합니다.
+
+> **적용 범위**: 이 스킬은 KOSPI 또는 KOSDAQ에 상장된 기업에 한정됩니다. 외국 기업은 `us-company-analysis` 스킬을 사용하세요.
 
 ## 실행 단계
 
@@ -19,7 +21,7 @@ URL: `https://finance.naver.com/search/searchList.naver?query={기업명}`
 
 검색 결과가 여러 개인 경우, 가장 근접한 결과를 선택하고 종목코드를 추출합니다 (예: 삼성전자 → `005930`).
 
-상장 기업이 아닌 경우, 해당 사실을 명시하고 수집 가능한 정보만으로 계속 진행합니다.
+KOSPI/KOSDAQ 검색 결과에서 기업을 찾을 수 없는 경우, 중단하고 사용자에게 `us-company-analysis` 스킬을 사용하도록 안내합니다.
 
 ### 2. 기업 데이터 수집 (병렬)
 

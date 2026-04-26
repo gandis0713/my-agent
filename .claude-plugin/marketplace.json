@@ -6,12 +6,12 @@
     "name": "changhyun-jeon",
     "email": "gandis0713@gmail.com"
   },
-  "version": "0.0.5",
+  "version": "0.0.6",
   "plugins": [
     {
       "name": "changhyun",
       "description": "Changhyun's personal agent",
-      "version": "0.0.5",
+      "version": "0.0.6",
       "author": {
         "name": "changhyun-jeon",
         "email": "gandis0713@gmail.com"

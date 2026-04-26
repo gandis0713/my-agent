@@ -1,12 +1,14 @@
 ---
-name: company-analysis
-description: Analyze a Korean listed company using Naver Finance for stock and financial data, DART for recent disclosures, and the economic-news skill for latest news.
+name: korea-company-analysis
+description: Analyze a Korean listed company (KOSPI/KOSDAQ) using Naver Finance for stock and financial data, DART for recent disclosures, and the economic-news skill for latest news. For foreign companies, use the us-company-analysis skill instead.
 model: sonnet
 ---
 
-# Company Analysis
+# Company Analysis (Korean Listed Companies Only)
 
-Perform a comprehensive analysis of a Korean listed company using Naver Finance, DART disclosures, and the economic-news skill.
+Perform a comprehensive analysis of a Korean listed company (KOSPI/KOSDAQ) using Naver Finance, DART disclosures, and the economic-news skill.
+
+> **Scope**: This skill is limited to companies listed on KOSPI or KOSDAQ. For foreign companies, use the `us-company-analysis` skill.
 
 ## Steps
 
@@ -19,7 +21,7 @@ Prompt: "검색 결과에서 회사명, 종목코드, 시장 구분(KOSPI/KOSDAQ
 
 If multiple results appear, select the closest match and extract the stock code (e.g., `005930` for Samsung Electronics).
 
-If the company is not listed, note it and proceed with available information only.
+If the company is not found on KOSPI/KOSDAQ, stop and inform the user to use the `us-company-analysis` skill instead.
 
 ### 2. Fetch Company Data (Parallel)
 
