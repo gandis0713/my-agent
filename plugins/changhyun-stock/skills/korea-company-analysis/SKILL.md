@@ -1,57 +1,30 @@
 ---
 name: korea-company-analysis
-description: Analyze a Korean listed company (KOSPI/KOSDAQ) using Naver Finance for stock and financial data, DART for recent disclosures, and the economic-news skill for latest news. For foreign companies, use the us-company-analysis skill instead.
+description: Analyze a Korean listed company (KOSPI/KOSDAQ) using the company-fetch skill for data and the economic-news skill for latest news. For foreign companies, use the us-company-analysis skill instead.
 model: sonnet
 ---
 
 # Company Analysis (Korean Listed Companies Only)
 
-Perform a comprehensive analysis of a Korean listed company (KOSPI/KOSDAQ) using Naver Finance, DART disclosures, and the economic-news skill.
+Perform a comprehensive analysis of a Korean listed company (KOSPI/KOSDAQ) by combining data from the `korea-company-fetch` skill and news from the `economic-news` skill.
 
 > **Scope**: This skill is limited to companies listed on KOSPI or KOSDAQ. For foreign companies, use the `us-company-analysis` skill.
 
 ## Steps
 
-### 1. Identify the Company
+### 1. Fetch Company Data
 
-Use WebFetch to search for the company on Naver Finance:
+Invoke the `company-fetch` skill with the company name.
 
-URL: `https://finance.naver.com/search/searchList.naver?query={기업명}`
-Prompt: "검색 결과에서 회사명, 종목코드, 시장 구분(KOSPI/KOSDAQ)을 추출해주세요."
+If the skill returns an `[Error]` block, stop and relay the error message to the user.
 
-If multiple results appear, select the closest match and extract the stock code (e.g., `005930` for Samsung Electronics).
-
-If the company is not found on KOSPI/KOSDAQ, stop and inform the user to use the `us-company-analysis` skill instead.
-
-### 2. Fetch Company Data (Parallel)
-
-Fetch the following three sources in parallel using WebFetch:
-
-**2a. Company Overview & Stock Price**
-
-URL: `https://finance.naver.com/item/main.naver?code={종목코드}`
-
-Prompt: "현재가, 전일 대비, 등락률, 시가총액, 상장 주식수, 외국인 소진율, 52주 최고/최저, PER, PBR, 배당수익률, 업종, 대표이사, 설립일, 상장일을 추출해주세요."
-
-**2b. Financial Summary**
-
-URL: `https://finance.naver.com/item/coinfo.naver?code={종목코드}`
-
-Prompt: "최근 3개년 매출액, 영업이익, 당기순이익, 부채비율, ROE를 추출해주세요."
-
-**2c. DART Disclosures**
-
-URL: `https://dart.fsc.go.kr/dsac001/search.do?textCrpNm={기업명}&maxCount=10`
-
-Prompt: "최근 공시 10건의 공시 날짜, 공시 제목, 공시 유형을 추출해주세요."
-
-If DART is inaccessible (JavaScript-heavy or blocked), silently skip this section and note it in the output.
-
-### 3. Fetch Related News
+### 2. Fetch Related News
 
 Invoke the `economic-news` skill with the company name as a keyword. Do not fetch news independently — delegate entirely to that skill.
 
-### 4. Present Results
+### 3. Present Results
+
+Using the structured data returned by `company-fetch` and the news from `economic-news`, present the analysis in the following format:
 
 ```
 ## 🏢 [기업명] 기업 분석 (YYYY-MM-DD)
@@ -88,7 +61,6 @@ Invoke the `economic-news` skill with the company name as a keyword. Do not fetc
 
 ## Notes
 
-- Always fetch fresh data; do not rely on cached results.
 - All financial figures should be presented in Korean units (억원, 조원).
-- If a data source returns an error, skip that section and note it in the output.
+- If a section is marked N/A in the fetch result, reflect that in the output.
 - For the news section, delegate entirely to the `economic-news` skill with the company name as keyword.

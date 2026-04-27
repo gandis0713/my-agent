@@ -1,57 +1,30 @@
 ---
 name: korea-company-analysis
-description: 네이버 금융으로 주가 및 재무 데이터, DART로 최근 공시, economic-news 스킬로 최신 뉴스를 수집해 한국 상장 기업(KOSPI/KOSDAQ)을 종합 분석합니다. 외국 기업은 us-company-analysis 스킬을 사용하세요.
+description: company-fetch 스킬로 데이터를 수집하고 economic-news 스킬로 최신 뉴스를 가져와 한국 상장 기업(KOSPI/KOSDAQ)을 종합 분석합니다. 외국 기업은 us-company-analysis 스킬을 사용하세요.
 model: sonnet
 ---
 
 # 기업 분석 (한국 상장 기업 전용)
 
-네이버 금융, DART 전자공시, economic-news 스킬을 활용해 한국 상장 기업(KOSPI/KOSDAQ)을 종합 분석합니다.
+`korea-company-fetch` 스킬의 데이터와 `economic-news` 스킬의 뉴스를 결합해 한국 상장 기업(KOSPI/KOSDAQ)을 종합 분석합니다.
 
 > **적용 범위**: 이 스킬은 KOSPI 또는 KOSDAQ에 상장된 기업에 한정됩니다. 외국 기업은 `us-company-analysis` 스킬을 사용하세요.
 
 ## 실행 단계
 
-### 1. 기업 식별
+### 1. 기업 데이터 수집
 
-WebFetch로 네이버 금융에서 기업을 검색합니다:
+기업명을 입력으로 `company-fetch` 스킬을 호출합니다.
 
-URL: `https://finance.naver.com/search/searchList.naver?query={기업명}`
-프롬프트: "검색 결과에서 회사명, 종목코드, 시장 구분(KOSPI/KOSDAQ)을 추출해주세요."
+스킬이 `[오류]` 블록을 반환하면 즉시 종료하고 사용자에게 오류 메시지를 전달합니다.
 
-검색 결과가 여러 개인 경우, 가장 근접한 결과를 선택하고 종목코드를 추출합니다 (예: 삼성전자 → `005930`).
-
-KOSPI/KOSDAQ 검색 결과에서 기업을 찾을 수 없는 경우, 중단하고 사용자에게 `us-company-analysis` 스킬을 사용하도록 안내합니다.
-
-### 2. 기업 데이터 수집 (병렬)
-
-아래 세 가지 소스를 WebFetch로 병렬 수집합니다:
-
-**2a. 기업 개요 & 주가 정보**
-
-URL: `https://finance.naver.com/item/main.naver?code={종목코드}`
-
-프롬프트: "현재가, 전일 대비, 등락률, 시가총액, 상장 주식수, 외국인 소진율, 52주 최고/최저, PER, PBR, 배당수익률, 업종, 대표이사, 설립일, 상장일을 추출해주세요."
-
-**2b. 재무 요약**
-
-URL: `https://finance.naver.com/item/coinfo.naver?code={종목코드}`
-
-프롬프트: "최근 3개년 매출액, 영업이익, 당기순이익, 부채비율, ROE를 추출해주세요."
-
-**2c. DART 공시 목록**
-
-URL: `https://dart.fsc.go.kr/dsac001/search.do?textCrpNm={기업명}&maxCount=10`
-
-프롬프트: "최근 공시 10건의 공시 날짜, 공시 제목, 공시 유형을 추출해주세요."
-
-DART 접근이 불가능한 경우(JavaScript 렌더링 필요 또는 차단), 해당 섹션을 조용히 건너뛰고 결과에 접근 불가를 명시합니다.
-
-### 3. 관련 뉴스 수집
+### 2. 관련 뉴스 수집
 
 `economic-news` 스킬을 기업명을 키워드로 지정해 호출합니다. 뉴스를 직접 수집하지 말고, 해당 스킬에 완전히 위임합니다.
 
-### 4. 결과 출력
+### 3. 결과 출력
+
+`company-fetch`에서 반환된 구조화 데이터와 `economic-news`의 뉴스를 결합해 아래 형식으로 출력합니다:
 
 ```
 ## 🏢 [기업명] 기업 분석 (YYYY-MM-DD)
@@ -88,7 +61,6 @@ DART 접근이 불가능한 경우(JavaScript 렌더링 필요 또는 차단), �
 
 ## 주의사항
 
-- 항상 최신 데이터를 fetch하며, 캐시된 결과에 의존하지 않습니다.
 - 재무 수치는 한국 단위(억원, 조원)로 표기합니다.
-- 특정 소스에서 오류가 발생하면 해당 섹션을 건너뛰고 결과에 명시합니다.
+- fetch 결과에서 N/A로 표시된 섹션은 그대로 출력에 반영합니다.
 - 뉴스 섹션은 `economic-news` 스킬에 기업명을 키워드로 전달해 완전히 위임합니다.

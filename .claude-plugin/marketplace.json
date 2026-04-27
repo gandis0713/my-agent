@@ -6,12 +6,12 @@
     "name": "changhyun-jeon",
     "email": "gandis0713@gmail.com"
   },
-  "version": "0.0.10",
+  "version": "0.0.11",
   "plugins": [
     {
       "name": "changhyun-stock",
       "description": "Changhyun's stock plugin",
-      "version": "0.0.10",
+      "version": "0.0.11",
       "author": {
         "name": "changhyun-jeon",
         "email": "gandis0713@gmail.com"
